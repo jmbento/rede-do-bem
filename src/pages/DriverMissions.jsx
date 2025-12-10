@@ -8,7 +8,6 @@ import ScheduleMatch from '../components/Missions/ScheduleMatch'
 import { getCategoryLabel } from '../utils/constants'
 
 const DriverMissions = () => {
-  const { profile } = useAuth()
   const [missions, setMissions] = useState([])
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('available') // available, my_missions
@@ -16,38 +15,37 @@ const DriverMissions = () => {
   const [selectedMission, setSelectedMission] = useState(null)
 
   useEffect(() => {
+    const loadMissions = async () => {
+      try {
+        setLoading(true)
+        let query = supabase
+          .from('requests') // Usando requests como base para missões simplificadas
+          .select(`
+            *,
+            requester:users(name, phone)
+          `)
+        
+        if (activeTab === 'available') {
+          // Missões disponíveis: requests pendentes sem voluntário atribuído
+          query = query.eq('status', 'pendente')
+        } else {
+          // Minhas missões: requests que eu aceitei (mockado por enquanto)
+          query = query.eq('status', 'em_transito') // Simplificação
+        }
+  
+        const { data, error } = await query
+  
+        if (error) throw error
+        setMissions(data || [])
+      } catch (error) {
+        console.error('Erro ao carregar missões:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
     loadMissions()
   }, [activeTab])
-
-  const loadMissions = async () => {
-    try {
-      setLoading(true)
-      let query = supabase
-        .from('requests') // Usando requests como base para missões simplificadas
-        .select(`
-          *,
-          requester:users(name, phone)
-        `)
-      
-      if (activeTab === 'available') {
-        // Missões disponíveis: requests pendentes sem voluntário atribuído
-        // (Na implementação real, teríamos uma tabela 'missions', aqui simplificamos usando requests)
-        query = query.eq('status', 'pendente')
-      } else {
-        // Minhas missões: requests que eu aceitei (mockado por enquanto)
-        query = query.eq('status', 'em_transito') // Simplificação
-      }
-
-      const { data, error } = await query
-
-      if (error) throw error
-      setMissions(data || [])
-    } catch (error) {
-      console.error('Erro ao carregar missões:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const handleAcceptMission = (mission) => {
     setSelectedMission(mission)

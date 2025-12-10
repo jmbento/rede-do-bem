@@ -98,7 +98,7 @@ export const matchItemToRequester = async (itemId, requesterId, requestId) => {
 }
 
 // Coleta iniciada: item em trânsito
-export const startTransit = async (itemId, driverId) => {
+export const startTransit = async (itemId) => {
   try {
     const { error } = await supabase
       .from('items')

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
 import { getCategoryLabel, getCategoryIcon } from '../utils/constants'
@@ -19,13 +19,7 @@ const RequesterDashboard = () => {
   const [selectedRequestForAgreement, setSelectedRequestForAgreement] = useState(null)
   const [queuePositions, setQueuePositions] = useState({})
 
-  useEffect(() => {
-    if (profile) {
-      loadRequests()
-    }
-  }, [profile])
-
-  const loadRequests = async () => {
+  const loadRequests = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('requests')
@@ -47,7 +41,13 @@ const RequesterDashboard = () => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [profile])
+
+  useEffect(() => {
+    if (profile) {
+      loadRequests()
+    }
+  }, [profile, loadRequests])
 
   const calculateQueuePosition = async (request) => {
     try {

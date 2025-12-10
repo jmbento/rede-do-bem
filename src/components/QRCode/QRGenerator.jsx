@@ -1,4 +1,4 @@
-import QRCode from 'qrcode.react'
+import { QRCodeSVG } from 'qrcode.react'
 
 /**
  * Gerador de QR Code para itens
@@ -8,7 +8,7 @@ const QRGenerator = ({ itemId, size = 200, className = '' }) => {
 
   return (
     <div className={`flex flex-col items-center ${className}`}>
-      <QRCode
+      <QRCodeSVG
         value={itemId}
         size={size}
         level="H"
