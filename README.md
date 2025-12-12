@@ -71,6 +71,30 @@ npm run dev
 
 Aplicação estará rodando em: `http://localhost:5173`
 
+## 🚀 Deploy Automático (FTP via GitHub Actions)
+
+O projeto já está configurado para deploy automático via FTP quando você faz push na branch `main`.
+
+### Configurar Secrets no GitHub
+
+Vá em **Settings > Secrets and variables > Actions** no seu repositório GitHub e adicione:
+
+| Secret | Descrição | Exemplo |
+|--------|-----------|---------|
+| `FTP_SERVER` | Endereço do servidor FTP | `ftp.seudominio.com.br` |
+| `FTP_USERNAME` | Usuário FTP | `usuario@seudominio.com.br` |
+| `FTP_PASSWORD` | Senha do FTP | `sua_senha_aqui` |
+| `FTP_TARGET_DIR` | Diretório destino no servidor | `/public_html/` ou `/subdominio/` |
+| `VITE_SUPABASE_URL` | URL do projeto Supabase | `https://xxx.supabase.co` |
+| `VITE_SUPABASE_ANON_KEY` | Chave anon do Supabase | `eyJ...` |
+
+### Como funciona
+
+1. Você faz `git push` na branch `main`
+2. GitHub Actions builda o projeto com `npm run build`
+3. A pasta `dist/` é enviada para seu servidor FTP
+4. Site atualizado automaticamente! ✨
+
 ## 👥 Perfis de Usuário
 
 ### Doador
