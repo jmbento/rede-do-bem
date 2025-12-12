@@ -73,6 +73,36 @@ function AppContent() {
           }
         />
 
+        {/* Missões - Distribuidores/Motoristas */}
+        <Route
+          path="/missoes"
+          element={
+            <ProtectedRoute>
+              <DriverMissions />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin Panel - Gestores */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminPanel />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Estoque - Armazenadores (usar Admin por enquanto) */}
+        <Route
+          path="/estoque"
+          element={
+            <ProtectedRoute>
+              <AdminPanel />
+            </ProtectedRoute>
+          }
+        />
+
         {/* Mapa Geral */}
         <Route
           path="/mapa"

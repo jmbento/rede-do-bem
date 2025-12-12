@@ -3,6 +3,25 @@
 -- Sistema de Doação Hospitalar
 -- ================================
 
+-- LIMPEZA INICIAL (Para evitar erros ao rodar novamente)
+DROP TABLE IF EXISTS notifications CASCADE;
+
+DROP TABLE IF EXISTS missions CASCADE;
+
+DROP TABLE IF EXISTS requests CASCADE;
+
+DROP TABLE IF EXISTS items CASCADE;
+
+DROP TABLE IF EXISTS users CASCADE;
+
+DROP TYPE IF EXISTS user_role CASCADE;
+
+DROP TYPE IF EXISTS item_status CASCADE;
+
+DROP TYPE IF EXISTS request_status CASCADE;
+
+DROP TYPE IF EXISTS mission_status CASCADE;
+
 -- Habilitar extensões necessárias
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
